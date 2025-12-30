@@ -628,7 +628,7 @@ h1 {
     font-size: 0.9rem;
     text-align: center;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
 }
 
 /* Traits Grid */
@@ -660,7 +660,7 @@ h1 {
     line-height: 1.7;
     color: var(--text-secondary);
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
 }
 
 /* Additional text wrapping for all result elements */
