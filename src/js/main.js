@@ -651,35 +651,45 @@
             imageTimeout: 0,
             removeContainer: true
         }).then(canvas => {
-            canvas.toBlob(blob => {
-                try {
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.download = `aura-${userName}-${Date.now()}.png`;
-                    link.href = url;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
+            const imgData = canvas.toDataURL('image/png');
 
-                    btn.innerHTML = '✅ 저장 완료!';
-                    showToast('📥 이미지가 저장되었습니다!');
-                    triggerHaptic(50);
+            // Create and show modal
+            const modal = document.createElement('div');
+            modal.className = 'image-modal-overlay';
+            modal.innerHTML = `
+                <div class="image-modal-content">
+                    <p class="image-modal-tip">✨ 이미지를 꾹 눌러서 저장하세요!</p>
+                    <img src="${imgData}" class="image-modal-img" alt="나의 아우라 결과">
+                    <button class="image-modal-close">닫기</button>
+                </div>
+            `;
 
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                    }, 2000);
-                } catch (err) {
-                    console.error('Download failed:', err);
-                    btn.innerHTML = '❌ 실패';
-                    showToast('저장에 실패했습니다. 다시 시도해주세요.');
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                    }, 2000);
-                }
-            }, 'image/png');
+            document.body.appendChild(modal);
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+
+            // Close handler
+            const closeBtn = modal.querySelector('.image-modal-close');
+            const closeHandler = () => {
+                document.body.removeChild(modal);
+                document.body.style.overflow = '';
+            };
+
+            closeBtn.onclick = closeHandler;
+            modal.onclick = (e) => {
+                if (e.target === modal) closeHandler();
+            };
+
+            btn.innerHTML = '✅ 생성 완료!';
+            showToast('👆 이미지를 꾹 눌러서 저장하세요!');
+            triggerHaptic(50);
+
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 2000);
+
         }).catch(err => {
             console.error('Capture failed:', err);
             btn.innerHTML = '❌ 실패';
