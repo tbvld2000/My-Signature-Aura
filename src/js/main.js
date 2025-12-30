@@ -254,6 +254,7 @@
             rarity: bracket.rarity, // Allows dynamic rarity based on strength
             strength: safeScore, // Use the actual calculated score
             badge: `${typeData.emoji} ${typeData.baseBadge}`,
+            emoji: typeData.emoji, // Add explicit emoji field
             soulmate: typeData.soulmate,
             notMatch: typeData.notMatch
         };
@@ -547,6 +548,14 @@
         // Use the new dynamic result system
         const result = getAuraResult(winner, strength);
 
+        // Rarity message based on dynamic rarity
+        const getRarityMessage = (rarity) => {
+            if (rarity <= 5) return '🌟 전설적인 아우라!';
+            if (rarity <= 12) return '✨ 매우 희귀한 아우라!';
+            if (rarity <= 25) return '💫 희귀한 아우라!';
+            return '⭐ 특별한 아우라!';
+        };
+
         // Show Result View
         document.documentElement.style.setProperty('--accent', result.color);
 
@@ -566,7 +575,7 @@
                             <div class="aura-ring ring-2"></div>
                             <div class="aura-ring ring-3"></div>
                             <div class="aura-core">
-                                <span class="aura-emoji">${getAuraEmoji(winner)}</span>
+                                <span class="aura-emoji">${result.emoji}</span>
                             </div>
                         </div>
                         <h1 class="aura-name-compact">${result.name}</h1>
