@@ -1,0 +1,30 @@
+# 디버그 및 임시 파일
+debug.html
+*.log
+
+# OS 파일
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (필요시)
+node_modules/
+package-lock.json
+
+# 빌드 결과물
+dist/
+build/
+
+# 환경 변수
+.env
+.env.local
+
+# 테스트 파일
+*.test.js
+coverage/

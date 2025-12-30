@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Signature Aura | 나만의 시그니처 오라 찾기</title>
+
+    <!-- SEO -->
+    <meta name="description" content="단 10개의 질문으로 당신만의 고유한 오라 컬러를 찾아보세요. 2025년 트렌디한 감체 오라 테스트.">
+    <meta property="og:title" content="My Signature Aura">
+    <meta property="og:description" content="나만의 시그니처 오라 컬러는 무엇일까요?">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="src/styles/accessibility.css">
+</head>
+
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#app" class="skip-link">메인 콘텐츠로 건너뛰기</a>
+
+    <!-- Animated Background Blobs -->
+    <div class="bg-container" id="bg-blobs" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Custom Magnetic Cursor -->
+    <div id="magnetic-cursor" aria-hidden="true"></div>
+
+    <main id="app" role="main">
+        <!-- Name Input View -->
+        <div id="name-view" class="view" role="region" aria-label="이름 입력">
+            <div class="card name-card">
+                <span class="aura-tag" style="margin-bottom: 1rem;" aria-hidden="true">IDENTITY</span>
+                <h1 style="font-size: clamp(2rem, 10vw, 3rem);">어떻게<br>불러드릴까요?</h1>
+                <p class="aura-desc" style="margin-bottom: 2rem;">당신의 이름을 알려주시면<br>더 정확한 아우라를 분석해 드릴게요.</p>
+                <div class="input-group">
+                    <label for="user-name-input" class="sr-only">이름</label>
+                    <input type="text" id="user-name-input" placeholder="이름을 입력하세요" maxlength="10" aria-required="true"
+                        aria-describedby="name-desc">
+                    <div class="input-underline" aria-hidden="true"></div>
+                    <span id="name-desc" class="sr-only">최대 10자까지 입력 가능합니다</span>
+                </div>
+                <button class="btn btn-primary" id="confirm-name-btn" disabled aria-disabled="true">분석 시작하기</button>
+            </div>
+        </div>
+
+        <!-- Landing View -->
+        <div id="landing-view" class="view active" role="region" aria-label="시작 화면">
+            <div class="card landing-card">
+                <div class="participant-badge"
+                    style="margin-bottom: 2rem; font-size: 0.9rem; background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 100px; display: inline-flex; align-items: center; gap: 8px;"
+                    role="status" aria-live="polite">
+                    <span
+                        style="width: 8px; height: 8px; background: #50E3C2; border-radius: 50%; box-shadow: 0 0 10px #50E3C2;"
+                        aria-hidden="true"></span>
+                    <span id="participant-count">12,402</span>명이 참여 중
+                </div>
+                <h1>나만의 시그니처<br>아우라 테스트</h1>
+                <p class="aura-desc" style="margin-bottom: 3rem;">당신의 고유한 진동과 색깔을<br>감각적인 3D 아우라로 발견해보세요.</p>
+                <button class="btn btn-primary" id="start-btn" aria-label="아우라 테스트 시작하기">시작하기</button>
+            </div>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="quiz-view" class="view" role="region" aria-label="퀴즈" aria-live="polite"></div>
+
+        <!-- Result View -->
+        <div id="result-view" class="view" role="region" aria-label="결과"></div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="src/js/main.js"></script>
+</body>
+
+</html>
