@@ -409,17 +409,14 @@ h1 {
 .result-card.compact {
     padding: 1.8rem 1.5rem;
     max-width: 420px;
-    /* Prevent text selection artifacts in capture */
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 /* Global safeguards for capture */
+/* Global safeguards for capture */
 .result-card *::selection {
-    background: transparent !important;
-    color: inherit !important;
+    background: rgba(255, 255, 255, 0.2);
+    /* Restore selection visibility */
+    color: inherit;
 }
 
 /* Rarity Badge - Eye-catching! */
@@ -465,19 +462,29 @@ h1 {
     font-size: 2.2rem;
     font-weight: 900;
     margin: 0.5rem 0 0.5rem;
+
+    /* VITAL: Force text color to be solid white */
     color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    /* Fix for transparent text issue */
+
+    /* Reset all background/clip properties that might cause transparency */
     background: none !important;
     background-color: transparent !important;
     background-image: none !important;
     -webkit-background-clip: border-box !important;
     background-clip: border-box !important;
+
     border: none !important;
     box-shadow: none !important;
     text-shadow: none !important;
+
     letter-spacing: -0.02em;
     line-height: 1.2;
     z-index: 10;
     position: relative;
+    opacity: 1 !important;
+    filter: none !important;
     opacity: 1 !important;
     filter: none !important;
     /* Ensure no pseudo-elements create a background */
