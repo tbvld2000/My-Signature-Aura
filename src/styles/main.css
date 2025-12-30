@@ -448,6 +448,23 @@ h1 {
     margin: 0 auto 1.5rem;
 }
 
+.aura-name-compact {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin: 0.5rem 0 0.5rem;
+    color: #FFFFFF;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.aura-tag-compact {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    display: block;
+}
+
 .aura-ring {
     position: absolute;
     top: 50%;
