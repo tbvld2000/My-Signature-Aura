@@ -105,7 +105,7 @@
 
     const auraTypes = {
         lavender: {
-            name: "멜로디 라벤더",
+            name: "Melody Lavender",
             color: "#E0C3FC",
             tag: "#섬세한_몽상가 #영감_수집가",
             desc: "물 흐르듯 유연하고 섬세한 감성을 가진 당신. 작은 것에서 큰 의미를 찾아내는 재능이 있어요.",
@@ -116,11 +116,11 @@
             rarity: 18,
             badge: "🌸 감성 예술가",
             shareText: "섬세한 감성의 소유자",
-            soulmate: "코스믹 민트",
-            notMatch: "피치 피즈"
+            soulmate: "🌿 Cosmic Mint",
+            notMatch: "🍑 Peach Fizz"
         },
         peach: {
-            name: "피치 피즈",
+            name: "Peach Fizz",
             color: "#FFD194",
             tag: "#비타민_에너지 #분위기_메이커",
             desc: "어디서나 기분 좋은 에너지를 만드는 밝은 오라. 사람들이 당신과 함께 있으면 즐거워해요.",
@@ -131,11 +131,11 @@
             rarity: 25,
             badge: "🍑 에너지 메이커",
             shareText: "긍정 에너지 뿜뿜",
-            soulmate: "로즈 래디언스",
-            notMatch: "자수정 글로우"
+            soulmate: "🌹 Rose Radiance",
+            notMatch: "💎 Amethyst Glow"
         },
         mint: {
-            name: "코스믹 민트",
+            name: "Cosmic Mint",
             color: "#96E6A1",
             tag: "#현명한_가이드 #깔끔한_해결사",
             desc: "혼란 속에서도 중심을 잃지 않는 명쾌함. 복잡한 문제를 단순하게 정리하는 능력이 있어요.",
@@ -146,11 +146,11 @@
             rarity: 15,
             badge: "🌿 냉철한 전략가",
             shareText: "명쾌한 해결사",
-            soulmate: "멜로디 라벤더",
-            notMatch: "오션 블리스"
+            soulmate: "🌸 Melody Lavender",
+            notMatch: "🌊 Oceanic Bliss"
         },
         ocean: {
-            name: "오션 블리스",
+            name: "Oceanic Bliss",
             color: "#89F7FE",
             tag: "#깊은_공감자 #평화의_휴식처",
             desc: "깊고 넓은 바다처럼 타인을 품어주는 따뜻한 오라. 당신과 있으면 마음이 편안해져요.",
@@ -161,11 +161,11 @@
             rarity: 12,
             badge: "🌊 공감의 대가",
             shareText: "깊은 공감능력 보유",
-            soulmate: "자수정 글로우",
-            notMatch: "코스믹 민트"
+            soulmate: "💎 Amethyst Glow",
+            notMatch: "🌿 Cosmic Mint"
         },
         rose: {
-            name: "로즈 래디언스",
+            name: "Rose Radiance",
             color: "#FECFEF",
             tag: "#다정한_낭만파 #애정_뿜뿜",
             desc: "세상의 아름다운 것들을 사랑하는 다정한 영혼. 사랑하고 사랑받는 것에서 힘을 얻어요.",
@@ -176,11 +176,11 @@
             rarity: 22,
             badge: "🌹 낭만주의자",
             shareText: "다정함의 화신",
-            soulmate: "피치 피즈",
-            notMatch: "오션 블리스"
+            soulmate: "🍑 Peach Fizz",
+            notMatch: "🌊 Oceanic Bliss"
         },
         amethyst: {
-            name: "자수정 글로우",
+            name: "Amethyst Glow",
             color: "#BBADFF",
             tag: "#유니크한_천재성 #자기주도적_삶",
             desc: "당신만의 독특한 세계관과 뚜렷한 색깔. 남들과 다른 길을 가는 것을 두려워하지 않아요.",
@@ -191,8 +191,8 @@
             rarity: 9,
             badge: "💎 독창적 창조자",
             shareText: "유니크한 세계관 소유",
-            soulmate: "오션 블리스",
-            notMatch: "피치 피즈"
+            soulmate: "🌊 Oceanic Bliss",
+            notMatch: "🍑 Peach Fizz"
         }
     };
 
