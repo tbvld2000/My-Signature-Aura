@@ -250,7 +250,7 @@
             color: typeData.color,
             tag: `${typeData.baseTag} ${bracket.keyword}`,
             desc: `${bracket.modifier} ${typeData.baseDesc}`,
-            traits: typeData.baseTraits,
+            traits: typeData.baseTraits.slice(0, 2), // Keep compact (2 traits only)
             rarity: bracket.rarity, // Allows dynamic rarity based on strength
             strength: safeScore, // Use the actual calculated score
             badge: `${typeData.emoji} ${typeData.baseBadge}`,
