@@ -566,7 +566,7 @@
                 <div class="btn-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <button class="btn btn-outline" onclick="location.reload()" style="flex: 1; min-width: 120px;">다시하기</button>
                     <button class="btn btn-secondary" id="download-btn" style="flex: 1; min-width: 140px;">📥 이미지 저장</button>
-                    <button class="btn btn-primary" id="share-btn" style="flex: 1; min-width: 140px;">📤 SNS 공유</button>
+                    <button class="btn btn-primary" id="share-btn" style="flex: 1; min-width: 140px;">🔗 링크 공유</button>
                 </div>
                 
                 <!-- Toast notification -->
@@ -584,7 +584,7 @@
 
         // Share button handler
         document.getElementById('share-btn').addEventListener('click', () => {
-            shareImage(result, strength);
+            shareLink();
         });
     };
 
@@ -691,96 +691,77 @@
         });
     };
 
-    const shareImage = (result, strength) => {
-        const area = document.getElementById('capture-area');
+    const shareLink = () => {
         const btn = document.getElementById('share-btn');
         const originalText = btn.innerHTML;
+        const siteUrl = 'https://my-signature-aura.vercel.app/';
 
-        btn.innerHTML = '⏳ 생성 중...';
+        btn.innerHTML = '🔗 공유 준비 중...';
         btn.disabled = true;
 
-        html2canvas(area, {
-            backgroundColor: '#0F1123',
-            scale: 2,
-            logging: false,
-            useCORS: true,
-            allowTaint: true,
-            foreignObjectRendering: false,
-            imageTimeout: 0,
-            removeContainer: true
-        }).then(canvas => {
-            canvas.toBlob(async blob => {
-                const file = new File([blob], `aura-result-${Date.now()}.png`, { type: 'image/png' });
+        const shareData = {
+            title: '나만의 시그니처 아우라 테스트',
+            text: '✨ 나의 아우라를 확인해보세요!\n당신의 시그니처 컬러는 무엇일까요?',
+            url: siteUrl
+        };
 
-                const rarityText = result.rarity <= 15 ? '희귀한 ' : '';
-                const shareData = {
-                    files: [file],
-                    title: `${userName}님의 시그니처 아우라`,
-                    text: `✨ 나는 ${rarityText}${result.name}!\n${result.badge} | 강도 ${strength}%\n${result.shareText} 🎨\n\n#아우라테스트 #성격테스트 #MBTI`
-                };
+        if (navigator.share) {
+            navigator.share(shareData)
+                .then(() => {
+                    btn.innerHTML = '✅ 공유 완료!';
+                    showToast('🔗 링크가 공유되었습니다!');
 
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    try {
-                        btn.innerHTML = '📤 공유창 열기...';
-                        await navigator.share(shareData);
-
-                        btn.innerHTML = '✅ 공유 완료!';
-                        showToast('📤 공유되었습니다!');
-
-                        setTimeout(() => {
-                            btn.innerHTML = originalText;
-                            btn.disabled = false;
-                        }, 2000);
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 2000);
+                })
+                .catch(err => {
+                    if (err.name === 'AbortError') {
+                        // User cancelled
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
                         return;
-                    } catch (err) {
-                        if (err.name === 'AbortError') {
-                            // User cancelled
-                            btn.innerHTML = originalText;
-                            btn.disabled = false;
-                            return;
-                        }
-                        console.log('Share failed:', err);
                     }
-                }
+                    // Share failed, try clipboard
+                    copyToClipboard(siteUrl, btn, originalText);
+                });
+        } else {
+            // No share API, use clipboard
+            copyToClipboard(siteUrl, btn, originalText);
+        }
+    };
 
-                // Fallback: download instead
-                showToast('공유 기능을 사용할 수 없습니다. 이미지를 저장합니다.');
-                try {
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.download = `aura-${userName}-${Date.now()}.png`;
-                    link.href = url;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
-
-                    btn.innerHTML = '✅ 저장 완료!';
-                    showToast('📥 이미지가 저장되었습니다!');
+    const copyToClipboard = (text, btn, originalText) => {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    btn.innerHTML = '✅ 복사 완료!';
+                    showToast('📋 링크가 클립보드에 복사되었습니다!');
 
                     setTimeout(() => {
                         btn.innerHTML = originalText;
                         btn.disabled = false;
                     }, 2000);
-                } catch (downloadErr) {
-                    console.error('Download fallback failed:', downloadErr);
+                })
+                .catch(err => {
+                    console.error('Copy failed:', err);
                     btn.innerHTML = '❌ 실패';
-                    showToast('저장에 실패했습니다.');
+                    showToast('링크 복사에 실패했습니다.');
                     setTimeout(() => {
                         btn.innerHTML = originalText;
                         btn.disabled = false;
                     }, 2000);
-                }
-            }, 'image/png');
-        }).catch(err => {
-            console.error('Capture failed:', err);
-            btn.innerHTML = '❌ 실패';
-            showToast('이미지 생성에 실패했습니다.');
+                });
+        } else {
+            // Fallback for older browsers
+            btn.innerHTML = '❌ 지원 안 됨';
+            showToast('이 브라우저는 링크 복사를 지원하지 않습니다.');
             setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }, 2000);
-        });
+        }
     };
 
     // --- Interaction Logic ---
