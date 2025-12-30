@@ -547,22 +547,7 @@
         // Use the new dynamic result system
         const result = getAuraResult(winner, strength);
 
-        // Rarity message based on dynamic rarity
-        const getRarityMessage = (rarity) => {
-            if (rarity <= 5) return '🌟 전설적인 아우라!';
-            if (rarity <= 12) return '✨ 매우 희귀한 아우라!';
-            if (rarity <= 25) return '💫 희귀한 아우라!';
-            return '⭐ 특별한 아우라!';
-        };
-
-        // Rarity message
-        const getRarityMessage = (rarity) => {
-            if (rarity <= 10) return '🌟 초희귀 아우라!';
-            if (rarity <= 15) return '✨ 매우 희귀한 아우라!';
-            if (rarity <= 20) return '💫 희귀한 아우라!';
-            return '⭐ 특별한 아우라!';
-        };
-
+        // Show Result View
         document.documentElement.style.setProperty('--accent', result.color);
 
         showView('result');
