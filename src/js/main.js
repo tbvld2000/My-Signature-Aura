@@ -632,7 +632,10 @@
             scale: 2,
             logging: false,
             useCORS: true,
-            borderRadius: 28
+            allowTaint: true,
+            foreignObjectRendering: false,
+            imageTimeout: 0,
+            removeContainer: true
         }).then(canvas => {
             canvas.toBlob(async blob => {
                 const file = new File([blob], `aura-result-${Date.now()}.png`, { type: 'image/png' });

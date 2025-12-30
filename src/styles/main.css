@@ -335,7 +335,9 @@ h1 {
     color: white;
     cursor: pointer;
     text-align: left;
+    font-size: 1.05rem;
     font-weight: 500;
+    line-height: 1.5;
     transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
     /* Ensure minimum touch target size */
     min-height: 56px;
@@ -782,6 +784,12 @@ h3 {
     .btn {
         font-size: 1rem;
         padding: 1rem 2rem;
+    }
+
+    /* Larger font for quiz options on mobile */
+    .option-btn {
+        font-size: 1.1rem;
+        padding: 1.3rem 1.2rem;
     }
 
     /* Compact result card mobile */
