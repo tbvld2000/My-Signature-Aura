@@ -409,6 +409,17 @@ h1 {
 .result-card.compact {
     padding: 1.8rem 1.5rem;
     max-width: 420px;
+    /* Prevent text selection artifacts in capture */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Global safeguards for capture */
+.result-card *::selection {
+    background: transparent !important;
+    color: inherit !important;
 }
 
 /* Rarity Badge - Eye-catching! */
