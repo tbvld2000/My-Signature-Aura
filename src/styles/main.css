@@ -453,15 +453,25 @@ h1 {
     font-weight: 900;
     margin: 0.5rem 0 0.5rem;
     color: #FFFFFF !important;
-    background: transparent !important;
+    background: none !important;
+    background-color: transparent !important;
     background-image: none !important;
     -webkit-background-clip: border-box !important;
     background-clip: border-box !important;
+    border: none !important;
+    box-shadow: none !important;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
     letter-spacing: -0.02em;
     line-height: 1.2;
     z-index: 10;
     position: relative;
+    /* Ensure no pseudo-elements create a background */
+}
+
+.aura-name-compact::before,
+.aura-name-compact::after {
+    display: none !important;
+    content: none !important;
 }
 
 .aura-tag-compact {
