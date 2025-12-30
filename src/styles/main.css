@@ -304,6 +304,48 @@ h1 {
     border-color: var(--accent);
 }
 
+/* Secondary button variant */
+.btn-secondary {
+    background: rgba(150, 230, 161, 0.15);
+    color: #96E6A1;
+    border: 2px solid rgba(150, 230, 161, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(150, 230, 161, 0.25);
+    border-color: #96E6A1;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20, 20, 40, 0.95);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.95rem;
+    font-weight: 500;
+    z-index: 10000;
+    transition: bottom 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    min-width: 200px;
+    text-align: center;
+}
+
+.toast.show {
+    bottom: 30px;
+}
+
 /* --- Quiz & Progress --- */
 .progress-bar {
     width: 100%;

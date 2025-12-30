@@ -569,19 +569,28 @@
                     </div>
                 </div>
                 
-                <div class="btn-group">
-                    <button class="btn btn-outline" onclick="location.reload()">다시하기</button>
-                    <button class="btn btn-primary" id="save-btn">결과 공유하기</button>
+                <div class="btn-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-outline" onclick="location.reload()" style="flex: 1; min-width: 120px;">다시하기</button>
+                    <button class="btn btn-secondary" id="download-btn" style="flex: 1; min-width: 140px;">📥 이미지 저장</button>
+                    <button class="btn btn-primary" id="share-btn" style="flex: 1; min-width: 140px;">📤 SNS 공유</button>
                 </div>
+                
+                <!-- Toast notification -->
+                <div id="toast" class="toast"></div>
             </div>
         `;
 
         const card = document.querySelector('.result-card');
         addTiltEffect(card);
 
-        // Enhanced share functionality
-        document.getElementById('save-btn').addEventListener('click', () => {
-            captureResult(result, strength);
+        // Download button handler
+        document.getElementById('download-btn').addEventListener('click', () => {
+            downloadImage(result, strength);
+        });
+
+        // Share button handler
+        document.getElementById('share-btn').addEventListener('click', () => {
+            shareImage(result, strength);
         });
     };
 
@@ -618,14 +627,83 @@
         element.addEventListener('touchend', handleReset);
     };
 
-    const captureResult = (result, strength) => {
-        const area = document.getElementById('capture-area');
-        const btn = document.getElementById('save-btn');
-        const originalText = btn.innerText;
+    const showToast = (message, duration = 3000) => {
+        const toast = document.getElementById('toast');
+        if (!toast) return;
 
-        btn.innerText = '인증카드 제작 중...';
+        toast.textContent = message;
+        toast.classList.add('show');
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, duration);
+    };
+
+    const downloadImage = (result, strength) => {
+        const area = document.getElementById('capture-area');
+        const btn = document.getElementById('download-btn');
+        const originalText = btn.innerHTML;
+
+        btn.innerHTML = '⏳ 생성 중...';
         btn.disabled = true;
-        updateAriaDisabled(btn, true);
+
+        html2canvas(area, {
+            backgroundColor: '#0F1123',
+            scale: 2,
+            logging: false,
+            useCORS: true,
+            allowTaint: true,
+            foreignObjectRendering: false,
+            imageTimeout: 0,
+            removeContainer: true
+        }).then(canvas => {
+            canvas.toBlob(blob => {
+                try {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = `aura-${userName}-${Date.now()}.png`;
+                    link.href = url;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+
+                    btn.innerHTML = '✅ 저장 완료!';
+                    showToast('📥 이미지가 저장되었습니다!');
+                    triggerHaptic(50);
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 2000);
+                } catch (err) {
+                    console.error('Download failed:', err);
+                    btn.innerHTML = '❌ 실패';
+                    showToast('저장에 실패했습니다. 다시 시도해주세요.');
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 2000);
+                }
+            }, 'image/png');
+        }).catch(err => {
+            console.error('Capture failed:', err);
+            btn.innerHTML = '❌ 실패';
+            showToast('이미지 생성에 실패했습니다.');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 2000);
+        });
+    };
+
+    const shareImage = (result, strength) => {
+        const area = document.getElementById('capture-area');
+        const btn = document.getElementById('share-btn');
+        const originalText = btn.innerHTML;
+
+        btn.innerHTML = '⏳ 생성 중...';
+        btn.disabled = true;
 
         html2canvas(area, {
             backgroundColor: '#0F1123',
@@ -640,7 +718,6 @@
             canvas.toBlob(async blob => {
                 const file = new File([blob], `aura-result-${Date.now()}.png`, { type: 'image/png' });
 
-                // Enhanced share message
                 const rarityText = result.rarity <= 15 ? '희귀한 ' : '';
                 const shareData = {
                     files: [file],
@@ -650,23 +727,30 @@
 
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     try {
-                        btn.innerText = '공유창 여는 중...';
+                        btn.innerHTML = '📤 공유창 열기...';
                         await navigator.share(shareData);
-                        btn.innerText = originalText;
-                        updateAriaDisabled(btn, false);
+
+                        btn.innerHTML = '✅ 공유 완료!';
+                        showToast('📤 공유되었습니다!');
+
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                        }, 2000);
                         return;
                     } catch (err) {
-                        if (err.name !== 'AbortError') {
-                            console.log('Share failed:', err);
+                        if (err.name === 'AbortError') {
+                            // User cancelled
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            return;
                         }
-                        // User cancelled, restore button
-                        btn.innerText = originalText;
-                        updateAriaDisabled(btn, false);
-                        return;
+                        console.log('Share failed:', err);
                     }
                 }
 
-                // Fallback: download image
+                // Fallback: download instead
+                showToast('공유 기능을 사용할 수 없습니다. 이미지를 저장합니다.');
                 try {
                     const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');
@@ -676,28 +760,32 @@
                     link.click();
                     document.body.removeChild(link);
                     URL.revokeObjectURL(url);
-                    btn.innerText = '저장 완료!';
-                    triggerHaptic(50);
+
+                    btn.innerHTML = '✅ 저장 완료!';
+                    showToast('📥 이미지가 저장되었습니다!');
+
                     setTimeout(() => {
-                        btn.innerText = originalText;
-                        updateAriaDisabled(btn, false);
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
                     }, 2000);
                 } catch (downloadErr) {
-                    console.error('Download failed:', downloadErr);
-                    btn.innerText = '저장 실패 - 다시 시도해주세요';
+                    console.error('Download fallback failed:', downloadErr);
+                    btn.innerHTML = '❌ 실패';
+                    showToast('저장에 실패했습니다.');
                     setTimeout(() => {
-                        btn.innerText = originalText;
-                        updateAriaDisabled(btn, false);
-                    }, 3000);
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 2000);
                 }
             }, 'image/png');
         }).catch(err => {
             console.error('Capture failed:', err);
-            btn.innerText = '이미지 생성 실패 - 다시 시도해주세요';
+            btn.innerHTML = '❌ 실패';
+            showToast('이미지 생성에 실패했습니다.');
             setTimeout(() => {
-                btn.innerText = originalText;
-                updateAriaDisabled(btn, false);
-            }, 3000);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 2000);
         });
     };
 
