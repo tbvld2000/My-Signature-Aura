@@ -278,9 +278,41 @@ h1 {
 }
 
 .btn-primary:disabled {
-    opacity: 0.3;
+    opacity: 0.7;
     cursor: not-allowed;
     transform: none;
+}
+
+/* Button Group Layout */
+.btn-group {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.btn-group .btn {
+    width: auto !important;
+    /* Override default 100% width */
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+}
+
+.btn-group .btn-full {
+    flex: 0 0 100%;
+    /* Force full width for specific buttons */
+    margin-top: 0.5rem;
+}
+
+opacity: 0.3;
+cursor: not-allowed;
+transform: none;
 }
 
 .btn:not(:disabled):hover {
