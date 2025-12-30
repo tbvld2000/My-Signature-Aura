@@ -630,11 +630,11 @@
                     </div>
                 </div>
                 
-                <!-- Action Buttons: Centered -->
-                <div class="btn-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 1.5rem;">
-                    <button class="btn btn-outline" onclick="location.reload()" style="flex: 0 1 120px;">다시하기</button>
-                    <button class="btn btn-secondary" id="download-btn" style="flex: 1; min-width: 140px; max-width: 200px;">📥 이미지 저장</button>
-                    <button class="btn btn-primary" id="share-btn" style="flex: 1; min-width: 140px; max-width: 200px;">🔗 링크 공유</button>
+                <!-- Action Buttons: Clean 2-Row Layout -->
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="download-btn">📥 이미지 저장</button>
+                    <button class="btn btn-primary" id="share-btn">🔗 링크 공유</button>
+                    <button class="btn btn-outline btn-full" onclick="location.reload()">다시하기</button>
                 </div>
                 
                 <!-- Toast notification -->
