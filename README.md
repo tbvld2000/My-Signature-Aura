@@ -1,5 +1,7 @@
 # My Signature Aura (Aura Test)
 
+<img src="assets/logo.png" alt="Aura Test Logo" width="200"/>
+
 사용자의 성향을 10가지 질문으로 분석하여 고유한 '아우라'로 시각화해주는 웹 애플리케이션입니다.
 단순한 MBTI 테스트를 넘어, 시각적 몰입감과 공유하고 싶은 결과를 만드는 데 집중했습니다.
 
