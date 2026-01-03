@@ -28,10 +28,6 @@
 
 외부 라이브러리 의존성이 없어 별도의 설치 과정 없이 바로 실행 가능합니다.
 
-1.  저장소 클론
-    ```bash
-    git clone https://github.com/tbvvld2000/aura-test.git
-    ```
 
 2.  실행
     *   `index.html` 파일을 브라우저에서 직접 실행하거나,
